@@ -3,9 +3,10 @@ import { ImageSize } from "../types";
 
 // Helper to get client with current API Key
 const getClient = () => {
-  const apiKey = process.env.API_KEY;
+  // In a Vite build, we access env vars via import.meta.env, but process.env is polyfilled in vite.config.ts
+  const apiKey = process.env.API_KEY || (import.meta as any).env?.VITE_API_KEY;
   if (!apiKey) {
-    throw new Error("API Key not found. Please select a key.");
+    throw new Error("API Key not found. Please set the API_KEY environment variable.");
   }
   return new GoogleGenAI({ apiKey });
 };
@@ -79,14 +80,10 @@ export const editAppAsset = async (
 };
 
 export const checkApiKey = async (): Promise<boolean> => {
-  if (window.aistudio && window.aistudio.hasSelectedApiKey) {
-    return await window.aistudio.hasSelectedApiKey();
-  }
-  return !!process.env.API_KEY;
+  // Simplified for deployed environment
+  return !!(process.env.API_KEY || (import.meta as any).env?.VITE_API_KEY);
 };
 
 export const selectApiKey = async (): Promise<void> => {
-  if (window.aistudio && window.aistudio.openSelectKey) {
-    await window.aistudio.openSelectKey();
-  }
+  console.warn("API Key selection not supported in this environment. Please set API_KEY env var.");
 };
