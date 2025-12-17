@@ -1,0 +1,5 @@
+{
+  "name": "Copy of app images",
+  "description": "Extract, resize, and format app store assets from APK websites. Supports automatic resizing for icons (114px, 512px) and screenshots (720p Landscape & Portrait).",
+  "requestFramePermissions": []
+}
